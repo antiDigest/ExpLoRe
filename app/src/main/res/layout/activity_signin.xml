@@ -16,5 +16,26 @@
         android:layout_gravity="center"
         android:layout_margin="50sp" />
 
+    <Button
+        android:id="@+id/sign_out_and_disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="50sp"
+        android:text="SignOutAndDisconnect" />
+
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="50sp"
+        android:text="SignOut" />
+
+    <Button
+        android:id="@+id/disconnect_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Disconnect" />
 
 </LinearLayout>

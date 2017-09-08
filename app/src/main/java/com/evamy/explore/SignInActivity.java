@@ -17,6 +17,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 //import com.google.android.gms.common.api.OptionalPendingResult;
 
@@ -45,6 +46,8 @@ public class SignInActivity extends AppCompatActivity implements
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+        findViewById(R.id.sign_out_button).setOnClickListener(this);
+        findViewById(R.id.disconnect_button).setOnClickListener(this);
 
         // [START configure_signin]
         // Configure sign-in to request the user's ID, email address, and basic
@@ -138,33 +141,33 @@ public class SignInActivity extends AppCompatActivity implements
     // [END signIn]
 
     // [START signOut]
-//    private void signOut() {
-//        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-//                new ResultCallback<Status>() {
-//                    @Override
-//                    public void onResult(Status status) {
-//                        // [START_EXCLUDE]
-//                        updateUI(false);
-//                        // [END_EXCLUDE]
-//                    }
-//                });
-//    }
-//    // [END signOut]
-//
-//    // [START revokeAccess]
-//    private void revokeAccess() {
-//        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-//                new ResultCallback<Status>() {
-//                    @Override
-//                    public void onResult(Status status) {
-//                        // [START_EXCLUDE]
-//                        updateUI(false);
-//                        // [END_EXCLUDE]
-//                    }
-//                });
-//    }
-//    // [END revokeAccess]
-//
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        // [START_EXCLUDE]
+                        updateUI(false);
+                        // [END_EXCLUDE]
+                    }
+                });
+    }
+    // [END signOut]
+
+    // [START revokeAccess]
+    private void revokeAccess() {
+        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        // [START_EXCLUDE]
+                        updateUI(false);
+                        // [END_EXCLUDE]
+                    }
+                });
+    }
+    // [END revokeAccess]
+
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
@@ -172,15 +175,14 @@ public class SignInActivity extends AppCompatActivity implements
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
     }
 
-    //
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        if (mProgressDialog != null) {
-//            mProgressDialog.dismiss();
-//        }
-//    }
-//
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
+
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
@@ -202,11 +204,15 @@ public class SignInActivity extends AppCompatActivity implements
         if (signedIn) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
 //            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
         } else {
 //            mStatusTextView.setText(R.string.signed_out);
+            mStatusTextView.setText("Signed Out Successfully !");
 
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+            findViewById(R.id.sign_out_button).setVisibility(View.GONE);
+            findViewById(R.id.disconnect_button).setVisibility(View.GONE);
         }
     }
 
@@ -216,12 +222,12 @@ public class SignInActivity extends AppCompatActivity implements
             case R.id.sign_in_button:
                 signIn();
                 break;
-//            case R.id.sign_out_button:
-//                signOut();
-//                break;
-//            case R.id.disconnect_button:
-//                revokeAccess();
-//                break;
+            case R.id.sign_out_button:
+                signOut();
+                break;
+            case R.id.disconnect_button:
+                revokeAccess();
+                break;
         }
     }
 }
